@@ -1,0 +1,24 @@
+{
+  "name": "code-challenge-digital-republic",
+  "version": "1.0.0",
+  "description": "- Nenhuma parede pode ter menos de 1 metro nem mais de 15 metros, mas podem possuir alturas e larguras diferentes - O total de área das portas e janelas deve ser no máximo 50% da área de parede - A altura de paredes com porta deve ser, no mínimo, 30 centímetros maior que a altura da porta - Cada janela possui as medidas: 2,00 x 1,20 mtos - Cada porta possui as medidas: 0,80 x 1,90 - Cada litro de tinta é capaz de pintar 5 metros quadrados - Não considerar teto nem piso. - As variações de tamanho das latas de tinta são:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Renan0211/code-challenge-digital-republic.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Renan0211/code-challenge-digital-republic/issues"
+  },
+  "homepage": "https://github.com/Renan0211/code-challenge-digital-republic#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^4.1.4"
+  }
+}
