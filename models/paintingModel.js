@@ -25,6 +25,23 @@ const calculateTotalWallArea = (walls) => {
   return totalWallArea;
 };
 
+const calculateNonPaintingAreaPerWall = (doorQty, windowQty) => {
+  const doorArea = doorQty * (doorMeasures.width * doorMeasures.height);
+  const windowArea = windowQty * (windowMeasures.width * windowMeasures.height);
+  return doorArea + windowArea;
+};
+
+const calculateTotalNonPaintingArea = (walls) => {
+  let totalNonPaitingArea = 0;
+  walls.forEach((wall) => {
+    const nonPaintingArea = calculateNonPaintingAreaPerWall(wall.doorQty, wall.windowQty);
+    totalNonPaitingArea += nonPaintingArea;
+  });
+  return totalNonPaitingArea;
+};
+
 const returnNecessaryCans = (walls) => {
   const totalWallArea = calculateTotalWallArea(walls);
+  const nonPaintingArea = calculateTotalNonPaintingArea(walls);
+  const paintingArea = totalWallArea - nonPaintingArea;
 };
