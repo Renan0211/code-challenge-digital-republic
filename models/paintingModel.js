@@ -40,8 +40,32 @@ const calculateTotalNonPaintingArea = (walls) => {
   return totalNonPaitingArea;
 };
 
+const calculateNecessaryCans = (litersNecessary) => {
+  cans.sort((a, b) => b - a);
+  // eslint-disable-next-line no-return-assign
+  const necessaryCans = cans.reduce((acc, curr) => {
+    acc[curr] = 0;
+    return acc;
+  }, {});
+  let remainingLitters = litersNecessary;
+  for (let i = 0; i < cans.length; i += 1) {
+    if (remainingLitters - cans[i] >= 0) {
+      remainingLitters -= cans[i];
+      necessaryCans[cans[i]] += 1;
+    }
+  }
+  return necessaryCans;
+};
+
 const returnNecessaryCans = (walls) => {
   const totalWallArea = calculateTotalWallArea(walls);
   const nonPaintingArea = calculateTotalNonPaintingArea(walls);
   const paintingArea = totalWallArea - nonPaintingArea;
+  const litersNecessary = paintingArea / areaPerLiter;
+  const necessaryCans = calculateNecessaryCans(litersNecessary);
+  return necessaryCans;
+};
+
+module.exports = {
+  returnNecessaryCans,
 };
