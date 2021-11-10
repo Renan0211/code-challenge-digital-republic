@@ -3,6 +3,10 @@ const doorMeasures = { width: 0.8, height: 1.9 };
 const minDifBetweenDoorAndCeiling = 0.3;
 const areaPerLiter = 5;
 const cans = [0.5, 2.5, 3.6, 18];
+const errs = {
+  invalidWall: { err: { message: 'Uma das paredes tem tamanho inválido' }, status: 400 },
+  tooMuchWindowsOrDoors: { err: { message: 'Muitas portas ou janelas em uma das paredes' }, status: 400 },
+};
 
 const validateWallMesure = (walls) => {
   const wallValidations = walls.map((wall) => {
@@ -62,11 +66,15 @@ const calculateNecessaryCans = (litersNecessary) => {
   return necessaryCans;
 };
 
+const validateProportion = (totalWallArea, nonPaintingArea) => nonPaintingArea <= totalWallArea / 2;
+
 const returnNecessaryCans = (walls) => {
   const wallMeasureValidation = validateWallMesure(walls);
-  if (!wallMeasureValidation) return { err: { message: 'Parede de tamanho inválido' }, status: 400 };
+  if (!wallMeasureValidation) return errs.invalidWall;
   const totalWallArea = calculateTotalWallArea(walls);
   const nonPaintingArea = calculateTotalNonPaintingArea(walls);
+  const proportionValidation = validateProportion(totalWallArea, nonPaintingArea);
+  if (!proportionValidation) return errs.tooMuchWindowsOrDoors;
   const paintingArea = totalWallArea - nonPaintingArea;
   const litersNecessary = paintingArea / areaPerLiter;
   const necessaryCans = calculateNecessaryCans(litersNecessary);
