@@ -4,10 +4,15 @@ const minDifBetweenDoorAndCeiling = 0.3;
 const areaPerLiter = 5;
 const cans = [0.5, 2.5, 3.6, 18];
 
-const validateWallMesure = (wallMeasures, includesDoor) => {
-  const { width, height } = wallMeasures;
-  if (width < 1 || width > 15) return false;
-  if (includesDoor && height - doorMeasures.height < minDifBetweenDoorAndCeiling) return false;
+const validateWallMesure = (walls) => {
+  const wallValidations = walls.map((wall) => {
+    const { wallMeasures, doorQty } = wall;
+    const { width, height } = wallMeasures;
+    if (width < 1 || width > 15) return false;
+    if (doorQty > 0 && height - doorMeasures.height < minDifBetweenDoorAndCeiling) return false;
+    return true;
+  });
+  if (wallValidations.includes(false)) return false;
   return true;
 };
 
@@ -58,6 +63,8 @@ const calculateNecessaryCans = (litersNecessary) => {
 };
 
 const returnNecessaryCans = (walls) => {
+  const wallMeasureValidation = validateWallMesure(walls);
+  if (!wallMeasureValidation) return { err: { message: 'Parede de tamanho inválido' }, status: 400 };
   const totalWallArea = calculateTotalWallArea(walls);
   const nonPaintingArea = calculateTotalNonPaintingArea(walls);
   const paintingArea = totalWallArea - nonPaintingArea;
